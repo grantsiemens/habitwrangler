@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   >span{
     padding: 8px 4px;
   }
@@ -10,56 +10,70 @@ const Grid = styled.div`
 
 const Column = styled.span`
   background-color: ghostwhite;
-  box-shadow: 0px 1px 2px;
+  border: 1px solid lightgrey;
   text-align: center;
   input {
-    display: ${(props) => props.assigned};
+    display: ${(props) => props.assigned ? "" : "none"};
   }
 `;
 
 const Input = styled.input`
 `;
 
+const CategoryBanner = styled.div`
+  background: ghostwhite;
+  width: 100%;
+  height: 35px;
+  border-top: solid 1px lightgrey;
+  text-align: center;
+
+`;
 
 //Index Function
 function ByWeek(){
+
+    return(
+<CategoryTasks/>
+    )
+}
+function CategoryTasks(){
     const Tasks = [
-        {id: 1, title: "put away dishes", dayassigned: ["","","","","","",""], daychecked: ["checked","","checked","","checked","","checked"]},
+        {id: 1, title: "put away dishes", dayassigned: [[true, true],[true, true],[true, false],[false, false],[true, false],[false, false],[true, false]]},
+        {id: 2, title: "do math", dayassigned: [[false, true],[true, true],[true, false],[false, false],[true, false],[false, false],[true, false]]},
+        {id: 3, title: "do dishes", dayassigned: [[false, true],[true, true],[true, false],[false, false],[true, false],[false, false],[true, false]]},
 
     ];
 
     return(
         <>
-            <WeekdayHeader />
+            <CategoryBanner>Morning</CategoryBanner>
+            <Grid>
+                <WeekdayHeader/>
+            {Tasks.map((item) =>
+                <>
 
-
-                {Tasks.map((item) =>
-                    <Grid>
-                        <Column key={item.id}>{item.title}</Column>
-                        {item.daychecked.map((daychecked) =>
-                            <>
-                                <Column assigned={daychecked} key={daychecked}>
-
-                                    <Input type="checkbox" {daychecked}></Input>
-
-                                </Column>
-                            </>
-                            )}
-
-                    </Grid>
-                )}
+                    {item.dayassigned.map((dayassigned) =>
+                        <>
+                            <Column assigned={dayassigned[0]} >
+                                <Input type="checkbox" checked={dayassigned[1]}></Input>
+                            </Column>
+                        </>
+                    )}
+                </>
+            )}
+            </Grid>
         </>
     )
 }
 
 function WeekdayHeader(){
-const DaysOfWeek = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const DaysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
 return(
-    <Grid>
+    <>
         {DaysOfWeek.map((item) =>
         <Column key={item}>{item}</Column>
         )}
-    </Grid>
+    </>
 )
 }
 

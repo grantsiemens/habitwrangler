@@ -1,37 +1,71 @@
-import ByWeek from './ByWeek.js';
-import styled from "styled-components";
+import Default from './Default.js';
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+
+//               //
+// Initial Theme //
+//               //
+const initialTheme = {
+  fontColor1: `orange`,
+  bg: '#281e12',
+  mainContainerBg: '#281e12',
+  //Main Bar
+  mainBarBg: '',
+  mainBarBorder: '//red solid 1px',
+  desktopContainerBorder: 'orange solid 1px',
+  fontFamily: '"Arial Narrow", Arial, sans-serif',
+}
+
+//Styles: Define Global Style
+const GlobalStyle = createGlobalStyle`
+body{
+  background: ${props => props.theme.bg};
+  color: ${props => props.theme.fontColor1};
+  font-family: ${props => props.theme.fontFamily};
+}`
 
 const Site = styled.div `
-  font-family: Cantarell;
+
+  `
+//Styles: Desktop Mode
+const FlexibleSite = styled.div `
   @media (min-width: 768px){
-  width: 80%;
-    border-radius: 5px;
-    box-shadow: 1px 1px 3px  1px rebeccapurple;
+    background: ${props => props.theme.mainContainerBg};
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: ${props => props.theme.desktopContainerBorder};
+    padding: 30px;
   }
 `
 const HeaderHeading = styled.div`
   color: white;
-  background: rebeccapurple;
+  background: ${props => props.theme.mainBarBg};
+  border: ${props => props.theme.mainBarBorder};
   display: block;
   border-radius: 3px;
-  padding: 10px;
-  margin-bottom: 20px;
-  text-align: center;
+  padding: 1px;
 `
 
 
 function App() {
   return (
+<>
+<GlobalStyle theme={initialTheme} />
+<ThemeProvider theme={initialTheme}>
 <Site>
-  <Header />
-  <ByWeek />
+  <FlexibleSite>
+    <Header />
+    <Default />
+  </FlexibleSite>
 </Site>
+</ThemeProvider>
+</>
   );
 }
 
 function Header(){
   return(
-      <HeaderHeading><h1>HabitFactory.io</h1></HeaderHeading>
+      <HeaderHeading><h1>Today</h1></HeaderHeading>
   )
 }
 
