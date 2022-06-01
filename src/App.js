@@ -5,23 +5,29 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 // Initial Theme //
 //               //
 const initialTheme = {
-  fontColor1: `orange`,
-  bg: '#281e12',
+  fontColor1: `#efefef`,
+  colorActive1: '#f20000',
+  colorPrimary1: '#b22e0b',
+  colorPrimary2: '#c49d27',
+  colorSecondary1: '#2c2c2c',
+  colorSecondary2: '#9f9fa0',
+  colorBg: '#281e12',
   mainContainerBg: '#281e12',
-  //Main Bar
-  mainBarBg: '',
-  mainBarBorder: '//red solid 1px',
-  desktopContainerBorder: 'orange solid 1px',
   fontFamily: '"Arial Narrow", Arial, sans-serif',
+
 }
 
 //Styles: Define Global Style
 const GlobalStyle = createGlobalStyle`
 body{
-  background: ${props => props.theme.bg};
+  background: ${props => props.theme.colorBg};
   color: ${props => props.theme.fontColor1};
   font-family: ${props => props.theme.fontFamily};
-}`
+}
+h1{
+  font-size: 1.5em
+}
+`
 
 const Site = styled.div `
 
@@ -33,17 +39,14 @@ const FlexibleSite = styled.div `
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    border: ${props => props.theme.desktopContainerBorder};
+    border: 4px solid ${props => props.theme.colorPrimary1};
     padding: 30px;
   }
 `
-const HeaderHeading = styled.div`
-  color: white;
-  background: ${props => props.theme.mainBarBg};
-  border: ${props => props.theme.mainBarBorder};
-  display: block;
-  border-radius: 3px;
-  padding: 1px;
+const SectionHeading = styled.div`
+  background-color: ${props => props.theme.colorPrimary1};
+  display: inline-block;
+  padding: 0px 10px 0px 10px;
 `
 
 
@@ -65,11 +68,11 @@ function App() {
 
 function Header(){
   return(
-      <HeaderHeading><h1>Today</h1></HeaderHeading>
+      <p>header goes here</p>
   )
 }
 
 
 
-
+export {SectionHeading};
 export default App;
