@@ -1,9 +1,7 @@
 import Default from './Default.js';
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
-//               //
-// Initial Theme //
-//               //
+// Initial Theme Placeholder - @todo to get populated by theme function
 const initialTheme = {
   fontColor1: `#efefef`,
   colorActive1: '#f20000',
@@ -14,10 +12,11 @@ const initialTheme = {
   colorBg: '#281e12',
   mainContainerBg: '#281e12',
   fontFamily: '"Arial Narrow", Arial, sans-serif',
-
 }
 
-//Styles: Define Global Style
+/*Begin Files*/
+
+//Non Theme Specific Global
 const GlobalStyle = createGlobalStyle`
 body{
   background: ${props => props.theme.colorBg};
@@ -29,11 +28,7 @@ h1{
 }
 `
 
-const Site = styled.div `
-
-  `
-//Styles: Desktop Mode
-const FlexibleSite = styled.div `
+const SizingContainer = styled.div `
   @media (min-width: 768px){
     background: ${props => props.theme.mainContainerBg};
     width: 80%;
@@ -43,11 +38,26 @@ const FlexibleSite = styled.div `
     padding: 30px;
   }
 `
-const SectionHeading = styled.div`
+
+const StyledHeader = styled.header `
+  //We really need to be pulling the style from window bars
+  //Header style needs to be moved to windowbar style, as we will have more than h1 in the future.
+  //so far, these styles need to be consistant.
   background-color: ${props => props.theme.colorPrimary1};
-  display: inline-block;
-  padding: 0px 10px 0px 10px;
+  width: 100%;
+  min-height: 4.5em;
+  margin-bottom: .5em;
+  box-shadow: ${props => props.theme.colorPrimary2} 1px 1px 1px;
+  border-radius: 10px;
+  display:flex;
+  align-items: center;
+  h1{
+    margin-left: 12px;
+  }
+  @media (min-width: 768px){
+  }
 `
+
 
 
 function App() {
@@ -55,12 +65,12 @@ function App() {
 <>
 <GlobalStyle theme={initialTheme} />
 <ThemeProvider theme={initialTheme}>
-<Site>
-  <FlexibleSite>
+
+  <SizingContainer>
     <Header />
     <Default />
-  </FlexibleSite>
-</Site>
+  </SizingContainer>
+
 </ThemeProvider>
 </>
   );
@@ -68,11 +78,13 @@ function App() {
 
 function Header(){
   return(
-      <p>header goes here</p>
+      <StyledHeader>
+        <h1>HabitWrangler</h1>
+      </StyledHeader>
   )
 }
 
 
 
-export {SectionHeading};
+
 export default App;
