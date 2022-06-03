@@ -48,15 +48,21 @@ const ProgressBar = styled.div`
 function Default(){
 
     return(
-<Dash/>
+Dash()
+    )
+}
+
+function Window(props){
+    return(
+        <StyledWindow>
+            <WindowTitleBar><h1>{props.title}</h1></WindowTitleBar>
+            <WindowPane>{props.content}</WindowPane>
+        </StyledWindow>
     )
 }
 function Dash(){
     return(
-        <>
-                <StyledWindow>
-                    <WindowTitleBar><h1>Now</h1></WindowTitleBar>
-            <WindowPane>
+            <Window title="Now" content={
                 <Flex>
                     <ProgressBar/>
                     <ProgressBar/>
@@ -66,12 +72,9 @@ function Dash(){
                     <ProgressBar/>
                     <ProgressBar/>
                 </Flex>
-            </WindowPane>
-                </StyledWindow>
-        </>
+                }
+            />
     )
 }
-
-
 
 export default Default;
