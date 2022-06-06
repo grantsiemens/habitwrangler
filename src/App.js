@@ -34,7 +34,6 @@ const SizingContainer = styled.div `
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    border: 4px solid ${props => props.theme.colorPrimary1};
     padding: 30px;
   }
 `
@@ -47,7 +46,6 @@ const StyledHeader = styled.header `
   width: 100%;
   min-height: 4.5em;
   margin-bottom: .5em;
-  box-shadow: ${props => props.theme.colorPrimary2} 1px 1px 1px;
   border-radius: 10px;
   display:flex;
   align-items: center;
