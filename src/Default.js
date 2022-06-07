@@ -30,14 +30,6 @@ const WindowPane = styled.div`
     border-radius: 1em;
 `;
 
-const Muntin = styled.span`
-    height: 5em;
-    width: 2px;
-    background: ${props => props.theme.colorPrimary2};
-    margin-left: 15px;
-    margin-right: 15px;
-`;
-
 const CurrentDay = styled.div`
     background: ${props => props.theme.colorSecondary1};
     width: 40px; height: 40px;
@@ -55,16 +47,31 @@ const ProgressBar = styled.div`
   box-shadow: inset 0.1em 0.1em 0.1em 0 rgba(255,255,255,0.6), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
 `;
 
-const StyledTask = styled.div`
-  height: 3em;
-  width: 100%;
-  border: solid red 1px;
-  margin-bottom: 5px;
+
+const StyledTaskContainer = styled.div`
+  display:flex;
+  align-items: center;
+  height: 2.5em;
   margin-top: 5px;
+  margin-bottom: 5px;
+  background: ${props => props.theme.colorSecondary1};
+
+`
+
+const StyledTask = styled.div`
+  width: 100%;
+  display: flex;
+  
 `
 
 const StyledTaskList = styled.div`
-width:100%
+width:100%;
+`
+
+const StyledTaskLineBreak = styled.div`
+width: 100%;
+height: 1px;
+  background: ${props => props.theme.colorSecondary2}; 
 `
 
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -81,6 +88,12 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
   white-space: nowrap;
   width: 1px;
 `
+const Icon = styled.svg`
+  fill: none;
+  stroke: white;
+  stroke-width: 2px;
+`
+
 const StyledCheckbox = styled.div`
   display: inline-block;
   width: 16px;
@@ -88,6 +101,13 @@ const StyledCheckbox = styled.div`
   background: ${props => props.checked ? 'salmon' : 'papayawhip'};
   border-radius: 3px;
   transition: all 150ms;
+  ${HiddenCheckbox}:focus + & {
+    box-shadow: 0 0 0 3px pink;
+  }
+
+  ${Icon} {
+    visibility: ${props => props.checked ? 'visible' : 'hidden'}
+  }
 `
 
 const CheckboxContainer = styled.div`
@@ -110,7 +130,12 @@ function Default(){
 const Checkbox = ({ className, checked, ...props }) => (
     <CheckboxContainer className={className}>
         <HiddenCheckbox checked={checked} {...props} />
-        <StyledCheckbox checked={checked} />
+        <StyledCheckbox checked={checked} >
+            <Icon viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+            </Icon>
+        </StyledCheckbox>
+
     </CheckboxContainer>
 )
 
@@ -126,7 +151,7 @@ function Window(props){
 }
 function Status(){
     return(
-            <Window title="Status" content={
+            <Window title="this week" content={
                 <Flex>
                     <ProgressBar/>
                     <ProgressBar/>
@@ -143,11 +168,13 @@ function Status(){
 
 const TaskList = () => {
 return (
-    <Window title="Tasks" content={
+    <Window title="tasks" content={
         <StyledTaskList>
         <Flex column>
-        <Task taskName="Task Name" checked={false} />
-        <Task taskName="Task Name" checked={true} />
+            <StyledTaskContainer><Task taskName="Task Name" checked={false} /></StyledTaskContainer>
+            <StyledTaskLineBreak/>
+            <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
+
         </Flex>
             </StyledTaskList>
 
@@ -158,21 +185,29 @@ return (
 }
 
 const Task = (props) => {
-const [checked, setCheck] = useState(false);
+const [checked, setChecked] = useState(false);
+
+const handleChange = () => {
+    setChecked(prevState => !prevState);
+};
 
     return(
+
             <StyledTask>
                 <div>
+
                 <label>
                     <Checkbox
                         checked={checked}
-                        onChange={setCheck}
+                        onChange={handleChange}
                     />
                     <span>{props.taskName}</span>
                 </label>
+
                 </div>
 
             </StyledTask>
+
     )
 }
 

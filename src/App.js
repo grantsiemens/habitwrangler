@@ -4,9 +4,10 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 // Initial Theme Placeholder - @todo to get populated by theme function
 const initialTheme = {
   fontColor1: `#efefef`,
+  fontColor2: '#9f9fa0',
   colorActive1: '#f20000',
   colorPrimary1: '#b22e0b',
-  colorPrimary2: '#c49d27',
+  colorPrimary2: 'orange',
   colorSecondary1: '#2c2c2c',
   colorSecondary2: '#9f9fa0',
   colorBg: '#281e12',
@@ -20,11 +21,12 @@ const initialTheme = {
 const GlobalStyle = createGlobalStyle`
 body{
   background: ${props => props.theme.colorBg};
-  color: ${props => props.theme.fontColor1};
+  color: ${props => props.theme.fontColor2};
   font-family: ${props => props.theme.fontFamily};
 }
 h1{
-  font-size: 1.5em
+  font-size: 1.5em;
+  color: ${props => props.theme.fontColor1};
 }
 `
 
@@ -77,7 +79,7 @@ function App() {
 function Header(){
   return(
       <StyledHeader>
-        <h1>HabitWrangler</h1>
+        <h1>[X] Eternal Habits</h1>
       </StyledHeader>
   )
 }
