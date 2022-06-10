@@ -10,9 +10,8 @@ const initialTheme = {
   colorPrimary2: 'orange',
   colorSecondary1: '#2c2c2c',
   colorSecondary2: '#9f9fa0',
-  colorBg: '#281e12',
-  mainContainerBg: '#281e12',
-  fontFamily: '"Arial Narrow", Arial, sans-serif',
+  colorSecondary3: '#242424',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
 }
 
 /*Begin Files*/
@@ -20,23 +19,23 @@ const initialTheme = {
 //Non Theme Specific Global
 const GlobalStyle = createGlobalStyle`
 body{
-  background: ${props => props.theme.colorBg};
+  background: ${props => props.theme.colorSecondary3};
   color: ${props => props.theme.fontColor2};
   font-family: ${props => props.theme.fontFamily};
 }
 h1{
   font-size: 1.5em;
   color: ${props => props.theme.fontColor1};
+  margin:0;
+  padding: 0;
 }
 `
 
 const SizingContainer = styled.div `
   @media (min-width: 768px){
-    background: ${props => props.theme.mainContainerBg};
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    padding: 30px;
   }
 `
 
@@ -46,16 +45,21 @@ const StyledHeader = styled.header `
   //so far, these styles need to be consistant.
   background-color: ${props => props.theme.colorPrimary1};
   width: 100%;
-  min-height: 4.5em;
-  margin-bottom: .5em;
+  min-height: 3em;
   border-radius: 10px;
   display:flex;
+
   align-items: center;
-  h1{
-    margin-left: 12px;
-  }
   @media (min-width: 768px){
   }
+`
+
+const StyledHeaderInner = styled.div`
+width:100%;
+display: flex;
+justify-content: space-between;
+margin-left: .4em;
+margin-right: .4em;  
 `
 
 
@@ -79,8 +83,12 @@ function App() {
 function Header(){
   return(
       <StyledHeader>
-        <h1>[X] Eternal Habits</h1>
+        <StyledHeaderInner>
+        <h1>habits</h1>
+        <h1>menu</h1>
+        </StyledHeaderInner>
       </StyledHeader>
+
   )
 }
 

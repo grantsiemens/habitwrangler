@@ -7,20 +7,31 @@ const Flex = styled.div`
 `;
 
 const StyledWindow = styled.div`
-  border: ${props => props.theme.colorPrimary1} 5px solid;
+  border-left: ${props => props.theme.colorPrimary1} .3em solid;
+  border-right: ${props => props.theme.colorPrimary1} .3em solid;
+  border-bottom: ${props => props.theme.colorPrimary1} .3em solid;
   display: block;
-  border-radius: 10px;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  border-radius: 6px;
+  background: ${props => props.theme.colorSecondary1};
 `
+
+const WindowDivider = styled.div`
+  margin-top: .4em;
+  margin-bottom: .4em;
+  `
 
 const WindowTitleBar = styled.div`
   background-color: ${props => props.theme.colorPrimary1};
-  display: inline-block;
   width:100%;
-  h1{
-    margin-left: 12px;
-  }
+  display:flex;
+  align-items: center;
+
+  
+`
+
+const WindowTitleBarContent = styled.div`
+margin-top: .5em;
+margin-bottom: .5em;  
 `
 
 const WindowPane = styled.div`
@@ -54,14 +65,19 @@ const StyledTaskContainer = styled.div`
   height: 2.5em;
   margin-top: 5px;
   margin-bottom: 5px;
-  background: ${props => props.theme.colorSecondary1};
+  background: ${props => props.theme.colorSecondary3};
 
 `
 
 const StyledTask = styled.div`
   width: 100%;
   display: flex;
-  
+  padding: .5em;
+  label{
+    //make this programmable by checkbox status in Task component
+  color: ${props => props.checkStatusUp ? props => props.theme.colorPrimary2 : props.theme.colorSecondary2};
+  }
+
 `
 
 const StyledTaskList = styled.div`
@@ -90,19 +106,20 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 `
 const Icon = styled.svg`
   fill: none;
-  stroke: white;
-  stroke-width: 2px;
+  stroke: ${props => props.theme.colorSecondary2};
+  stroke-width: .2em;
 `
 
 const StyledCheckbox = styled.div`
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  background: ${props => props.checked ? 'salmon' : 'papayawhip'};
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 1em;
+  background: ${props => props.checked ? props => props.theme.colorPrimary1 : props => props.theme.colorSecondary2};
   border-radius: 3px;
   transition: all 150ms;
   ${HiddenCheckbox}:focus + & {
-    box-shadow: 0 0 0 3px pink;
+    box-shadow: 0 0 0 3px ${props => props.theme.colorPrimary2};
   }
 
   ${Icon} {
@@ -120,7 +137,9 @@ function Default(){
 
     return(
         <>
+            <WindowDivider/>
             <Status/>
+            <WindowDivider/>
             <TaskList/>
         </>
     )
@@ -142,16 +161,18 @@ const Checkbox = ({ className, checked, ...props }) => (
 function Window(props){
     return(
         <StyledWindow>
-            <WindowTitleBar><h1>{props.title}</h1></WindowTitleBar>
-            <WindowPane>
-                {props.content}
-            </WindowPane>
+            <WindowTitleBar>
+                <WindowTitleBarContent>
+                    <h1 className="tPos{props.tPos}">{props.t}</h1>
+                </WindowTitleBarContent>
+            </WindowTitleBar>
+            <WindowPane>{props.content}</WindowPane>
         </StyledWindow>
     )
 }
 function Status(){
     return(
-            <Window title="this week" content={
+            <Window t="stats" tPos="2" content={
                 <Flex>
                     <ProgressBar/>
                     <ProgressBar/>
@@ -168,13 +189,14 @@ function Status(){
 
 const TaskList = () => {
 return (
-    <Window title="tasks" content={
+    <Window t="tasks" content={
         <StyledTaskList>
         <Flex column>
             <StyledTaskContainer><Task taskName="Task Name" checked={false} /></StyledTaskContainer>
-            <StyledTaskLineBreak/>
             <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
-
+            <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
+            <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
+            <StyledTaskLineBreak/>
         </Flex>
             </StyledTaskList>
 
@@ -185,15 +207,20 @@ return (
 }
 
 const Task = (props) => {
-const [checked, setChecked] = useState(false);
-
+const taskApi = false;
+const [checked, setChecked] = useState(taskApi);
+//send checked status back up for styledTask
 const handleChange = () => {
     setChecked(prevState => !prevState);
+    //send / receive data with api
+
 };
 
     return(
 
-            <StyledTask>
+            <StyledTask
+            checkStatusUp={checked}
+            >
                 <div>
 
                 <label>
