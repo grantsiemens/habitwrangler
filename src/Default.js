@@ -1,5 +1,14 @@
 import styled from "styled-components";
 import {useState} from 'react';
+//Icons
+import {ReactComponent as OverflowIco } from './assets/images/overflow.svg';
+
+//Styled Components
+const SvgStyled = styled.div`
+display: flex;  
+fill: ${props => props.theme.colorSecondary2};
+
+`;
 
 const Flex = styled.div`
     display: flex;
@@ -32,6 +41,7 @@ const WindowTitleBar = styled.div`
 const WindowTitleBarContent = styled.div`
 margin-top: .5em;
 margin-bottom: .5em;  
+display: flex;
 `
 
 const WindowPane = styled.div`
@@ -43,11 +53,15 @@ const WindowPane = styled.div`
 
 const CurrentDay = styled.div`
     background: ${props => props.theme.colorSecondary1};
+    display: flex;
     width: 40px; height: 40px;
     text-align: center;
+    align-items: center;
     box-shadow: ${props => props.theme.colorPrimary2} 1px 1px 3px 1px;
     margin-left: 3px;
     margin-right: 3px;
+    font-size: small;
+    line-height: 1.1em;
 `;
 
 
@@ -87,7 +101,7 @@ width:100%;
 const StyledTaskLineBreak = styled.div`
 width: 100%;
 height: 1px;
-  background: ${props => props.theme.colorSecondary2}; 
+background: ${props => props.theme.colorSecondary2}; 
 `
 
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -145,7 +159,9 @@ function Default(){
     )
 }
 
-//Components
+//
+//Rest of Components
+//
 const Checkbox = ({ className, checked, ...props }) => (
     <CheckboxContainer className={className}>
         <HiddenCheckbox checked={checked} {...props} />
@@ -158,25 +174,29 @@ const Checkbox = ({ className, checked, ...props }) => (
     </CheckboxContainer>
 )
 
+//Window Component
 function Window(props){
     return(
         <StyledWindow>
             <WindowTitleBar>
                 <WindowTitleBarContent>
-                    <h1 className="tPos{props.tPos}">{props.t}</h1>
+                    {/*@todo style svgstyled and overflowico into a single function*/}
+                    <SvgStyled><OverflowIco/></SvgStyled> <h1 className="tPos{props.tPos}">{props.t}</h1>
                 </WindowTitleBarContent>
             </WindowTitleBar>
             <WindowPane>{props.content}</WindowPane>
         </StyledWindow>
     )
 }
+
+//Status Row
 function Status(){
     return(
             <Window t="stats" tPos="2" content={
                 <Flex>
                     <ProgressBar/>
                     <ProgressBar/>
-                    <CurrentDay>Nov 13</CurrentDay>
+                    <CurrentDay>Mar 13</CurrentDay>
                     <ProgressBar/>
                     <ProgressBar/>
                     <ProgressBar/>
@@ -187,6 +207,8 @@ function Status(){
     )
 }
 
+
+//Task List
 const TaskList = () => {
 return (
     <Window t="tasks" content={
@@ -209,20 +231,17 @@ return (
 const Task = (props) => {
 const taskApi = false;
 const [checked, setChecked] = useState(taskApi);
-//send checked status back up for styledTask
+//@todo send checked status back up for styledTask
 const handleChange = () => {
     setChecked(prevState => !prevState);
-    //send / receive data with api
-
+    //@todo send / receive data with api
 };
-
     return(
 
             <StyledTask
             checkStatusUp={checked}
             >
                 <div>
-
                 <label>
                     <Checkbox
                         checked={checked}
@@ -230,12 +249,12 @@ const handleChange = () => {
                     />
                     <span>{props.taskName}</span>
                 </label>
-
                 </div>
-
             </StyledTask>
 
     )
 }
 
+
+//Exports
 export default Default;

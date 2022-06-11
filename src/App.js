@@ -3,7 +3,7 @@ import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
 // Initial Theme Placeholder - @todo to get populated by theme function
 const initialTheme = {
-  fontColor1: `#efefef`,
+  fontColor1: `#dbdbdb`,
   fontColor2: '#9f9fa0',
   colorActive1: '#f20000',
   colorPrimary1: '#b22e0b',
@@ -27,7 +27,8 @@ h1{
   font-size: 1.5em;
   color: ${props => props.theme.fontColor1};
   margin:0;
-  padding: 0;
+  line-height: 5px;
+  padding: 10px 0;
 }
 `
 
@@ -71,7 +72,7 @@ function App() {
 <ThemeProvider theme={initialTheme}>
 
   <SizingContainer>
-    <Header />
+
     <Default />
   </SizingContainer>
 
@@ -84,8 +85,7 @@ function Header(){
   return(
       <StyledHeader>
         <StyledHeaderInner>
-        <h1>habits</h1>
-        <h1>menu</h1>
+        <h1></h1>
         </StyledHeaderInner>
       </StyledHeader>
 
