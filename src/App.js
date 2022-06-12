@@ -1,5 +1,5 @@
 import Default from './Default.js';
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components/macro';
 
 // Initial Theme Placeholder - @todo to get populated by theme function
 const initialTheme = {

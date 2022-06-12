@@ -181,7 +181,7 @@ function Window(props){
             <WindowTitleBar>
                 <WindowTitleBarContent>
                     {/*@todo style svgstyled and overflowico into a single function*/}
-                    <SvgStyled><OverflowIco/></SvgStyled> <h1 className="tPos{props.tPos}">{props.t}</h1>
+                    <h1 className="tPos{props.tPos}">{props.t}</h1><SvgStyled><OverflowIco/></SvgStyled>
                 </WindowTitleBarContent>
             </WindowTitleBar>
             <WindowPane>{props.content}</WindowPane>
@@ -210,14 +210,20 @@ function Status(){
 
 //Task List
 const TaskList = () => {
+    const data = [
+        {taskName: "Wash dishes", complete: true},
+        {taskName: "Eat food", complete: false}
+    ]
+
 return (
     <Window t="tasks" content={
         <StyledTaskList>
+            {console.log(data)}
         <Flex column>
-            <StyledTaskContainer><Task taskName="Task Name" checked={false} /></StyledTaskContainer>
-            <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
-            <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
-            <StyledTaskContainer> <Task taskName="Task Name" checked={true} /></StyledTaskContainer>
+            {data.map((entry) => (
+            <StyledTaskContainer><Task taskName={entry.taskName} checked={entry.complete} /></StyledTaskContainer>
+                ))}
+
             <StyledTaskLineBreak/>
         </Flex>
             </StyledTaskList>
