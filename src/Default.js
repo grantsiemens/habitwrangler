@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 //Icons
 import {ReactComponent as OverflowIco } from './assets/images/overflow.svg';
 
@@ -210,18 +210,25 @@ function Status(){
 
 //Task List
 const TaskList = () => {
-    const data = [
+
+    //Day for Today
+    let data = [
         {taskName: "Wash dishes", complete: true},
         {taskName: "Eat food", complete: false}
     ]
 
+    function updateTask(id, status){
+        data[id].complete = status;
+    }
+let id = 0;
+
 return (
     <Window t="tasks" content={
         <StyledTaskList>
-            {console.log(data)}
+
         <Flex column>
             {data.map((entry) => (
-            <StyledTaskContainer><Task taskName={entry.taskName} checked={entry.complete} /></StyledTaskContainer>
+            <StyledTaskContainer key={entry.taskName} ><Task key={entry.taskName} array={id++} updateTask={updateTask} taskName={entry.taskName} taskStatus={entry.complete} /></StyledTaskContainer>
                 ))}
 
             <StyledTaskLineBreak/>
@@ -235,9 +242,12 @@ return (
 }
 
 const Task = (props) => {
-const taskApi = false;
-const [checked, setChecked] = useState(taskApi);
-//@todo send checked status back up for styledTask
+const [checked, setChecked] = useState(props.taskStatus);
+    useEffect(() => {
+        //@todo call function to update data3
+        props.updateTask(props.array, checked);
+
+    }, [checked, props]);
 const handleChange = () => {
     setChecked(prevState => !prevState);
     //@todo send / receive data with api
