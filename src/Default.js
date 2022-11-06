@@ -42,6 +42,7 @@ const WindowTitleBarContent = styled.div`
 margin-top: .5em;
 margin-bottom: .5em;  
 display: flex;
+align-items: center;
 `
 
 const WindowPane = styled.div`
@@ -146,6 +147,19 @@ const CheckboxContainer = styled.div`
   vertical-align: middle;
 `
 
+const Modal = styled.div`
+  position: fixed;
+  left: 0;
+  top:0;
+  right: 0;
+  bottom: 0;
+  background-color: blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+`
+
 //Entry Component
 function Default(){
 
@@ -176,12 +190,27 @@ const Checkbox = ({ className, checked, ...props }) => (
 
 //Window Component
 function Window(props){
+
+
+    const handleClick = () => {
+        return contextMenu()
+    }
+
+    const contextMenu = () => {
+        return(
+            <Modal>
+                <h1>test</h1>
+                <p>test test test</p>
+            </Modal>
+        )
+    }
+
     return(
         <StyledWindow>
             <WindowTitleBar>
                 <WindowTitleBarContent>
                     {/*@todo style svgstyled and overflowico into a single function*/}
-                    <h1 className="tPos{props.tPos}">{props.t}</h1><SvgStyled><OverflowIco/></SvgStyled>
+                    <h1 className="tPos{props.tPos}">{props.t}</h1><SvgStyled onClick={handleClick}><OverflowIco/></SvgStyled>
                 </WindowTitleBarContent>
             </WindowTitleBar>
             <WindowPane>{props.content}</WindowPane>
@@ -196,7 +225,7 @@ function Status(){
                 <Flex>
                     <ProgressBar/>
                     <ProgressBar/>
-                    <CurrentDay>Mar 13</CurrentDay>
+                    <CurrentDay></CurrentDay>
                     <ProgressBar/>
                     <ProgressBar/>
                     <ProgressBar/>
@@ -211,52 +240,64 @@ function Status(){
 //Task List
 const TaskList = () => {
 
-    //Day for Today
-    let data = [
-        {taskName: "Wash dishes", complete: true},
-        {taskName: "Eat food", complete: false}
-    ]
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3000/task/week')
+            .then((response) => response.json())
+            .then((data) => {
+                setTasks(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    }, []);
+
 
     function updateTask(id, status){
-        data[id].complete = status;
+        fetch("http://localhost:3000/task/" + id +"/" + status)
+            .catch((err) => {
+                console.log(err.message);
+            });
     }
-let id = 0;
 
-return (
-    <Window t="tasks" content={
-        <StyledTaskList>
+    //Translate today to UTC time and filter weeks results by day
+    const dateClient = new Date()
+    const dateUtc = new Date(Date.UTC(dateClient.getUTCFullYear(), dateClient.getUTCMonth(), dateClient.getUTCDate()));
+    const dateUtcSerialized = dateUtc.toISOString()
+    //{tasks.filter(task => task.task_date === dateUtcSerialized).map((entry) => (
+    //Use this once we fix broken date thing
+    return (
+        <Window t="tasks" content={
+            <StyledTaskList>
 
-        <Flex column>
-            {data.map((entry) => (
-            <StyledTaskContainer key={entry.taskName} ><Task key={entry.taskName} array={id++} updateTask={updateTask} taskName={entry.taskName} taskStatus={entry.complete} /></StyledTaskContainer>
-                ))}
-
-            <StyledTaskLineBreak/>
-        </Flex>
-            </StyledTaskList>
-
-
-    }
-            />
-)
+            <Flex column>
+                {tasks.map((entry, index) => (
+                <Task key={index} taskId={entry.task_id} updateTask={updateTask} taskName={entry.task_name} taskStatus={entry.task_status} />
+                    ))}
+            </Flex>
+                </StyledTaskList>
+        }
+                />
+    )
 }
 
+
 const Task = (props) => {
+
 const [checked, setChecked] = useState(props.taskStatus);
-    useEffect(() => {
-        //@todo call function to update data3
-        props.updateTask(props.array, checked);
 
-    }, [checked, props]);
 const handleChange = () => {
-    setChecked(prevState => !prevState);
-    //@todo send / receive data with api
+    setChecked(prevState => !prevState)
 };
-    return(
 
-            <StyledTask
-            checkStatusUp={checked}
-            >
+useEffect(() => {
+    props.updateTask(props.taskId, checked);
+    }, [props, checked])
+
+    return(
+        <StyledTaskContainer>
+        <StyledTask checkStatusUp={checked} >
                 <div>
                 <label>
                     <Checkbox
@@ -267,7 +308,7 @@ const handleChange = () => {
                 </label>
                 </div>
             </StyledTask>
-
+        </StyledTaskContainer>
     )
 }
 

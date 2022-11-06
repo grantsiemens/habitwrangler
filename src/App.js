@@ -40,31 +40,6 @@ const SizingContainer = styled.div `
   }
 `
 
-const StyledHeader = styled.header `
-  //We really need to be pulling the style from window bars
-  //Header style needs to be moved to windowbar style, as we will have more than h1 in the future.
-  //so far, these styles need to be consistant.
-  background-color: ${props => props.theme.colorPrimary1};
-  width: 100%;
-  min-height: 3em;
-  border-radius: 10px;
-  display:flex;
-
-  align-items: center;
-  @media (min-width: 768px){
-  }
-`
-
-const StyledHeaderInner = styled.div`
-width:100%;
-display: flex;
-justify-content: space-between;
-margin-left: .4em;
-margin-right: .4em;  
-`
-
-
-
 function App() {
   return (
 <>
@@ -81,16 +56,7 @@ function App() {
   );
 }
 
-function Header(){
-  return(
-      <StyledHeader>
-        <StyledHeaderInner>
-        <h1></h1>
-        </StyledHeaderInner>
-      </StyledHeader>
 
-  )
-}
 
 
 
