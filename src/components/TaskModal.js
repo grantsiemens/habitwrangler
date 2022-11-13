@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
-
+import Modal from "./Modal.js";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,9 +37,9 @@ const InputLabelContainer = styled.div`
 `
 
 const TaskModal = () => {
-
     return(
         <>
+            <Modal modalTitle="Add Task">
 <Container>
     <InputLabelContainer>
         <Label>
@@ -62,6 +62,7 @@ const TaskModal = () => {
         </Label>
     </InputLabelContainer>
 </Container>
+            </Modal>
         </>
     )
 }

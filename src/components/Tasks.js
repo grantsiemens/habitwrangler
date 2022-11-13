@@ -1,10 +1,12 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import Window from './Window'
 import {useState, useEffect, useContext} from 'react'
 import {Flex} from '../styles/components'
 import Task from './Task'
 import {ModalContext} from "./Default";
 import TaskModal from './TaskModal'
+
+
 
 
 const StyledTaskList = styled.div`
@@ -51,17 +53,16 @@ const TaskList = () => {
     const modalContext = useContext(ModalContext);
 
    const addTask = () => {
+        console.log("lel")
        modalContext.setIsOpenModal(true);
-       modalContext.setModalTitle("Add Task");
-       modalContext.setModalBody(TaskModal);
    }
 
     return (
+        <>
+            {modalContext.isOpenModal && <TaskModal/>}
         <Window
             t="tasks"
-            button ={
-            addTask
-            }
+            button ={addTask}
             content={
             <StyledTaskList>
                 <Flex column>
@@ -72,6 +73,7 @@ const TaskList = () => {
             </StyledTaskList>
         }
         />
+        </>
     )
 }
 

@@ -71,7 +71,7 @@ const TitleBarContent = styled.div`
   align-items: center;
 `
 
-const Modal = ({ modalTitle, modalBody }) => {
+const Modal = ({ modalTitle, modalBody, children }) => {
     const modalContext = useContext(ModalContext);
 return (
     <>
@@ -96,6 +96,7 @@ return (
             </TitleBar>
             <ModalBody>
                 {modalBody}
+                {children}
             </ModalBody>
         </Container>
     </ContainerContainer>

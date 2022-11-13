@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Status from './Status'
 import TaskList from './Tasks.js'
-import Modal from "./Modal.js";
 import {useState, createContext} from "react";
 
 
@@ -16,13 +15,14 @@ export const ModalContext = createContext();
 const Default = () =>{
 
     const [isOpenModal, setIsOpenModal] = useState(false)
+    // eslint-disable-next-line no-unused-vars
     const [modalTitle, setModalTitle] = useState("default message");
+    // eslint-disable-next-line no-unused-vars
     const [modalBody, setModalBody] = useState("default body");
     return(
         <>
 
-            <ModalContext.Provider value={{ setIsOpenModal, setModalTitle, setModalBody }}>
-                {isOpenModal && <Modal modalTitle={modalTitle} modalBody={modalBody} />}
+            <ModalContext.Provider value={{ setIsOpenModal, setModalTitle, setModalBody, isOpenModal }}>
             <WindowDivider/>
             <Status/>
             <WindowDivider/>
