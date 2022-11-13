@@ -1,5 +1,5 @@
-# Eternal Habits
-Change your life. Build, track, analyze and maintain habits without fail. 
+# HabitWrangler
+Build, track, analyze and maintain habits. 
 
 ## React Scripts
 
