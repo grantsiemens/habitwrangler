@@ -60,7 +60,7 @@ const TaskList = () => {
         <Window
             t="tasks"
             button ={
-            ["+", addTask]
+            addTask
             }
             content={
             <StyledTaskList>

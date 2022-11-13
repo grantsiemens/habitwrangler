@@ -45,7 +45,7 @@ function Window(props){
             <WindowTitleBar>
                 <WindowTitleBarContent>
                     {/*@todo styles svgstyled and overflowico into a single function*/}
-                    <h1>{props.t}</h1><SvgStyled><OverflowIco onClick={()=>props.button[1]()}/></SvgStyled>
+                    <h1>{props.t}</h1><SvgStyled><OverflowIco onClick={()=>props.button()}/></SvgStyled>
                 </WindowTitleBarContent>
             </WindowTitleBar>
             <WindowPane>{props.content}</WindowPane>

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
-import {useState} from "react";
 
 const Container = styled.div`
   display: flex;

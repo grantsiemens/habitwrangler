@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Default from './components/Default';
-import styled, { ThemeProvider } from 'styled-components/macro';
+import { ThemeProvider } from 'styled-components/macro';
 import {initialTheme, GlobalStyle, SizingContainer} from './styles/theme.js';
 
 
