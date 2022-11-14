@@ -45,11 +45,11 @@ const TaskModal = () => {
         new Array(weekdays.length).fill(false)
     );
 
-
+//
 
     const handleChange = (position) => {
-        const updatedCheckedState = checkedState.map((item, index) =>
-            index === position ? !item : item
+        const updatedCheckedState = checkedState.map((day, index) =>
+            index === position ? !day : day
         )
         setCheckedState(updatedCheckedState);
     }
@@ -70,13 +70,14 @@ const TaskModal = () => {
             <DaysOfWeek>
                 {weekdays.map((day, index) => {
                     return(
-                        <div key = {index}>
-                            <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
+                        <div key = {`weekdaymap${index}`}>
+                            <label htmlFor={`custom-checkbox-${index}`}>{day}
                             <Checkbox
                                 id={`custom-checkbox-${index}`}
                                 checked={checkedState[index]}
                                 onChange={() => handleChange(index)}
                             />
+                            </label>
                         </div>
                     )
                 })}
