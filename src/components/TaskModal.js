@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Checkbox from "./Checkbox";
 import Modal from "./Modal.js";
+import {useState} from "react";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,6 +38,22 @@ const InputLabelContainer = styled.div`
 `
 
 const TaskModal = () => {
+
+    const weekdays = ["Mon","Tues","Wed","Thur","Fri","Sat","Sun"]
+
+    const [checkedState, setCheckedState] = useState(
+        new Array(weekdays.length).fill(false)
+    );
+
+
+
+    const handleChange = (position) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+            index === position ? !item : item
+        )
+        setCheckedState(updatedCheckedState);
+    }
+
     return(
         <>
             <Modal modalTitle="Add Task">
@@ -51,13 +68,18 @@ const TaskModal = () => {
         <Label>
             Days of Week
             <DaysOfWeek>
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+                {weekdays.map((day, index) => {
+                    return(
+                        <div key = {index}>
+                            <label htmlFor={`custom-checkbox-${index}`}>{day}</label>
+                            <Checkbox
+                                id={`custom-checkbox-${index}`}
+                                checked={checkedState[index]}
+                                onChange={() => handleChange(index)}
+                            />
+                        </div>
+                    )
+                })}
             </DaysOfWeek>
         </Label>
     </InputLabelContainer>

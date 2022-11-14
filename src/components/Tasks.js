@@ -53,7 +53,6 @@ const TaskList = () => {
     const modalContext = useContext(ModalContext);
 
    const addTask = () => {
-        console.log("lel")
        modalContext.setIsOpenModal(true);
    }
 
